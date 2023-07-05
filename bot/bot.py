@@ -9,7 +9,6 @@ import pydub
 from pathlib import Path
 from datetime import datetime
 import openai
-
 import telegram
 from telegram import (
     Update,
@@ -38,6 +37,8 @@ import openai_utils
 # setup
 db = database.Database()
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
 
 user_semaphores = {}
 user_tasks = {}
@@ -90,7 +91,8 @@ async def register_user_if_not_exists(update: Update, context: CallbackContext, 
         user_semaphores[user.id] = asyncio.Semaphore(1)
 
     if db.get_user_attribute(user.id, "current_model") is None:
-        db.set_user_attribute(user.id, "current_model", config.models["available_text_models"][0])
+        # db.set_user_attribute(user.id, "current_model", config.models["available_text_models"][0])
+        db.set_user_attribute(user.id, "current_model", "gpt-4")
 
     # back compatibility for n_used_tokens field
     n_used_tokens = db.get_user_attribute(user.id, "n_used_tokens")
@@ -238,7 +240,7 @@ async def message_handle(update: Update, context: CallbackContext, message=None,
 
             chatgpt_instance = openai_utils.ChatGPT(model=current_model)
             if config.enable_message_streaming:
-                gen = chatgpt_instance.send_message_stream(_message, dialog_messages=dialog_messages, chat_mode=chat_mode)
+                gen = chatgpt_instance.send_message_stream(_message, dialog_messages=dialog_messages, chat_mode=chat_mode, engine="energy-4",)
             else:
                 answer, (n_input_tokens, n_output_tokens), n_first_dialog_messages_removed = await chatgpt_instance.send_message(
                     _message,
@@ -660,6 +662,9 @@ async def post_init(application: Application):
     ])
 
 def run_bot() -> None:
+
+
+
     application = (
         ApplicationBuilder()
         .token(config.telegram_token)

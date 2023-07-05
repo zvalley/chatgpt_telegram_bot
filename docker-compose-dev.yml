@@ -3,17 +3,13 @@ version: "3"
 services:
   mongo:
     container_name: mongo
-    # image: mongo:latest
-    image: mongo:4.4.18
+    image: mongo:latest
     restart: always
     ports:
       - 127.0.0.1:${MONGODB_PORT:-27017}:${MONGODB_PORT:-27017}
     volumes:
       - ${MONGODB_PATH:-./mongodb}:/data/db
     # TODO: add auth
-    # environment:
-    #   MONGO_INITDB_ROOT_USERNAME: root
-    #   MONGO_INITDB_ROOT_PASSWORD: Sab0746E!
 
   chatgpt_telegram_bot:
     platform: linux/x86_64
@@ -28,21 +24,16 @@ services:
 
   mongo_express:
     container_name: mongo-express
-    image: mongo-express:0.54.0
+    image: mongo-express:latest
     restart: always
     ports:
       - 127.0.0.1:${MONGO_EXPRESS_PORT:-8081}:${MONGO_EXPRESS_PORT:-8081}
     environment:
       - ME_CONFIG_MONGODB_SERVER=mongo
-      # - ME_CONFIG_MONGODB_SERVER=mongo.chatgpt_telegram_bot_default
       - ME_CONFIG_MONGODB_PORT=${MONGODB_PORT:-27017}
-      # - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
       - ME_CONFIG_MONGODB_AUTH_DATABASE=chatgpt_telegram_bot
       - ME_CONFIG_BASICAUTH_USERNAME=${MONGO_EXPRESS_USERNAME:-username}
       - ME_CONFIG_BASICAUTH_PASSWORD=${MONGO_EXPRESS_PASSWORD:-password}
-      # - ME_CONFIG_BASICAUTH_USERNAME="user" 
-      # - ME_CONFIG_BASICAUTH_PASSWORD="Sab0746E!"
-      # - ME_CONFIG_MONGODB_ADMINUSERNAME=root
-      # - ME_CONFIG_MONGODB_ADMINPASSWORD=Sab0746E!
     depends_on:
       - mongo

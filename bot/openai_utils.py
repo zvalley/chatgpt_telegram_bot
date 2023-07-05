@@ -1,9 +1,17 @@
 import config
-
+import logging
 import tiktoken
 import openai
-openai.api_key = config.openai_api_key
 
+openai.api_key = config.openai_api_key
+openai.api_base = config.openai_api_url
+openai.util.logging.getLogger().setLevel(logging.DEBUG)
+openai.api_type = "azure"
+openai.api_version = "2023-03-15-preview"
+# openai_engine="energize"
+openai.engine="energy-4"
+openai.log='debug'
+openai.verify_ssl_certs=False
 
 OPENAI_COMPLETION_OPTIONS = {
     "temperature": 0.7,
@@ -59,7 +67,7 @@ class ChatGPT:
 
         return answer, (n_input_tokens, n_output_tokens), n_first_dialog_messages_removed
 
-    async def send_message_stream(self, message, dialog_messages=[], chat_mode="assistant"):
+    async def send_message_stream(self, message, dialog_messages=[], chat_mode="assistant", engine=None):
         if chat_mode not in config.chat_modes.keys():
             raise ValueError(f"Chat mode {chat_mode} is not supported")
 
@@ -71,6 +79,7 @@ class ChatGPT:
                     messages = self._generate_prompt_messages(message, dialog_messages, chat_mode)
                     r_gen = await openai.ChatCompletion.acreate(
                         model=self.model,
+                        engine=engine,
                         messages=messages,
                         stream=True,
                         **OPENAI_COMPLETION_OPTIONS
