@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/bot/bot.py",
             "console": "integratedTerminal",
             "justMyCode": false,
-            "args": ["--config_env", "config/config_dev.env"]
+            "args": ["--config_env", "config/config_dev.env", "--config_yml", "config/config_dev.yml"]
         }
     ]
 }
