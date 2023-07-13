@@ -5,6 +5,7 @@ import openai
 
 openai.api_key = config.openai_api_key
 openai.api_base = config.openai_api_url
+
 openai.util.logging.getLogger().setLevel(logging.DEBUG)
 openai.api_type = "azure"
 openai.api_version = "2023-03-15-preview"
@@ -12,6 +13,16 @@ openai.api_version = "2023-03-15-preview"
 openai.engine="energy-4"
 openai.log='debug'
 openai.verify_ssl_certs=False
+
+openai.Image.api_base = config.openai_api_url
+openai.Image.api_key = config.openai_api_key
+openai.Image.api_type = "azure"
+openai.Image.api_version = "2023-06-01-preview"
+# openai_Image.engine="energize"
+openai.Image.engine="energy-4"
+openai.Image.log='debug'
+openai.Image.verify_ssl_certs=False
+
 
 OPENAI_COMPLETION_OPTIONS = {
     "temperature": 0.7,
@@ -198,7 +209,8 @@ async def transcribe_audio(audio_file):
 
 
 async def generate_images(prompt, n_images=4):
-    r = await openai.Image.acreate(prompt=prompt, n=n_images, size="512x512")
+    r = await openai.Image.acreate(prompt=prompt, n=n_images, size="512x512",api_key=openai.Image.api_key ,api_base=openai.Image.api_base ,api_type=openai.Image.api_type ,api_version=openai.Image.api_version ,organization=None)
+    # r = await openai.Image.acreate(prompt=prompt, n=n_images, size="512x512",api_key=openai.Image.api_key ,api_base="https://go-boldly-us-3.openai.azure.com" ,api_type=openai.Image.api_type ,api_version=openai.Image.api_version ,organization=None)
     image_urls = [item.url for item in r.data]
     return image_urls
 
