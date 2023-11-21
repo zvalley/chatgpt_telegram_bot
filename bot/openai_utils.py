@@ -8,9 +8,9 @@ openai.api_base = config.openai_api_url
 
 openai.util.logging.getLogger().setLevel(logging.DEBUG)
 openai.api_type = "azure"
-openai.api_version = "2023-03-15-preview"
+openai.api_version =  "2023-03-15-preview"
 # openai_engine="energize"
-openai.engine="energy-4"
+openai.engine="energy-41"
 openai.log='debug'
 openai.verify_ssl_certs=False
 
