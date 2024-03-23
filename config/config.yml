@@ -1,5 +1,5 @@
 openai_api_url: "https://go-boldly-us-3.openai.azure.com"
-open_ai_model: "energy-41"
+openai_model: "energy-41"
 openai_api_version: "2024-02-15-preview"
 use_chatgpt_api: true
 allowed_telegram_usernames: ["zvalley"]  # if empty, the bot is available to anyone. pass a username string to allow it and/or user ids as positive integers and/or channel ids as negative integers
