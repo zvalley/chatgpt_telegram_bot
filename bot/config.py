@@ -33,6 +33,7 @@ else:
 telegram_token = tokens_yaml["telegram_token"]
 openai_api_key = tokens_yaml["openai_api_key"]
 openai_api_url = config_yaml["openai_api_url"]
+openai_api_version = config_yaml["openai_api_version"]
 use_chatgpt_api = config_yaml.get("use_chatgpt_api", True)
 allowed_telegram_usernames = config_yaml["allowed_telegram_usernames"]
 new_dialog_timeout = config_yaml["new_dialog_timeout"]
