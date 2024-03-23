@@ -19,6 +19,9 @@ else:
 with open(config_yaml_filepath, 'r') as f:
     config_yaml = yaml.safe_load(f)
 
+with open(config_dir / "tokens.yml", 'r') as f:
+    tokens_yaml = yaml.safe_load(f)
+
 # load .env config
 if args.config_env is not None:
     config_env = dotenv.dotenv_values(args.config_env)
@@ -27,8 +30,8 @@ else:
 
 
 # config parameters
-telegram_token = config_yaml["telegram_token"]
-openai_api_key = config_yaml["openai_api_key"]
+telegram_token = tokens_yaml["telegram_token"]
+openai_api_key = tokens_yaml["openai_api_key"]
 openai_api_url = config_yaml["openai_api_url"]
 use_chatgpt_api = config_yaml.get("use_chatgpt_api", True)
 allowed_telegram_usernames = config_yaml["allowed_telegram_usernames"]
