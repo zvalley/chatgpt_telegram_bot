@@ -6,7 +6,7 @@ import openai
 openai.api_key = config.openai_api_key
 openai.api_base = config.openai_api_url
 
-openai.util.logging.getLogger().setLevel(logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 openai.api_type = "azure"
 openai.api_version =  config.openai_api_version
 # openai_engine="energize"
