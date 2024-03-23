@@ -8,16 +8,16 @@ openai.api_base = config.openai_api_url
 
 openai.util.logging.getLogger().setLevel(logging.DEBUG)
 openai.api_type = "azure"
-openai.api_version =  "2023-03-15-preview"
+openai.api_version =  config.openai_api_version
 # openai_engine="energize"
-openai.engine="energy-41"
+openai.engine=config.openai_model
 openai.log='debug'
 openai.verify_ssl_certs=False
 
 openai.Image.api_base = config.openai_api_url
 openai.Image.api_key = config.openai_api_key
 openai.Image.api_type = "azure"
-openai.Image.api_version = "2023-06-01-preview"
+openai.Image.api_version = config.openai_api_version
 # openai_Image.engine="energize"
 openai.Image.engine=openai.engine
 openai.Image.log='debug'
